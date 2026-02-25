@@ -9,9 +9,9 @@ export default function MarketingView() {
     ];
 
     const campaigns = [
-        { name: "Diwali Handloom Fest", region: "North America", spend: "$4,500", status: "Active" },
-        { name: "Silk Route Revival", region: "Europe", spend: "$2,100", status: "Active" },
-        { name: "Summer Cotton Edit", region: "Asia Pacific", spend: "$800", status: "Paused" }
+        { name: "Diwali Handloom Fest", region: "North America", spend: "₹3,75,000", status: "Active" },
+        { name: "Silk Route Revival", region: "Europe", spend: "₹1,75,000", status: "Active" },
+        { name: "Summer Cotton Edit", region: "Asia Pacific", spend: "₹65,000", status: "Paused" }
     ];
 
     return (

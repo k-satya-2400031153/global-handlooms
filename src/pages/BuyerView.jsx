@@ -72,7 +72,7 @@ export default function BuyerView() {
                         transition={{ duration: 1, delay: 0.6 }}
                         className="text-lg md:text-xl text-slate-300 max-w-2xl drop-shadow-lg"
                     >
-                        Experience authentic Indian craftsmanship enhanced with luminous GPU-rendered liquid silk visuals.
+                        Experience authentic Indian craftsmanship.
                     </motion.p>
                 </div>
             </div>

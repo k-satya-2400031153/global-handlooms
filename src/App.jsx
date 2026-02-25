@@ -18,8 +18,6 @@ export default function App() {
     const { cart } = useCart();
 
     const roles = ["Buyer", "Artisan", "Marketing", "Admin"];
-
-    // Cursor tracking
     useEffect(() => {
         const updateMousePosition = (e) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
