@@ -1,13 +1,14 @@
-import { ShoppingBag, Star } from 'lucide-react';
+import { useState } from "react";
+import { ShoppingBag, Star, Gift } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { MeshDistortMaterial, Sphere, Float, Sparkles, Stars } from '@react-three/drei';
-import { useCart } from "../context/CartContext"; // Naya import context ke liye
+import { useCart } from "../context/CartContext";
 
-// Tumhare naye animated components
 import { HoverCard } from "../components/HoverCard";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TextReveal } from "../components/TextReveal";
+import { SpinWheelModal } from "../components/SpinWheelModal";
 
 const mockProducts = [
     { id: 1, name: "Authentic Ikat Saree", origin: "Telangana, India", price: "₹4,500", rating: 4.8, image: "/saree.jpg" },
@@ -16,12 +17,21 @@ const mockProducts = [
 ];
 
 export default function BuyerView() {
-    const { addToCart } = useCart(); // Hook use kiya
+    const { addToCart } = useCart();
+    const [isWheelOpen, setIsWheelOpen] = useState(false);
 
     return (
-        <div className="w-full space-y-16 pb-12 overflow-visible">
+        <div className="w-full space-y-16 pb-12 overflow-visible relative">
 
-            {/* HERO - Ultra Premium 3D Vibe */}
+            {/* Spin to Win Floating Button - Bottom Right */}
+            <button
+                onClick={() => setIsWheelOpen(true)}
+                className="fixed bottom-8 right-8 z-30 bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-full shadow-lg shadow-indigo-500/30 hover:scale-110 transition-transform animate-bounce"
+            >
+                <Gift size={28} />
+            </button>
+
+            {/* HERO - Ultra Premium 3D Vibe (Silk Balloons Preserved) */}
             <div className="relative h-[60vh] w-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(79,70,229,0.25)] bg-slate-950">
                 <div className="absolute inset-0 z-0">
                     <Canvas camera={{ position: [0, 0, 5] }}>
@@ -100,7 +110,6 @@ export default function BuyerView() {
                                         </div>
                                     </div>
 
-                                    {/* Yahan onClick attach kiya gaya hai */}
                                     <button
                                         onClick={() => addToCart(product)}
                                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors active:scale-95"
@@ -114,6 +123,9 @@ export default function BuyerView() {
                     ))}
                 </div>
             </div>
+
+            {/* Spin Wheel Modal Component */}
+            <SpinWheelModal isOpen={isWheelOpen} onClose={() => setIsWheelOpen(false)} />
         </div>
     );
 }
