@@ -10,6 +10,7 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { TextReveal } from "../components/TextReveal";
 import { SpinWheelModal } from "../components/SpinWheelModal";
 
+// 👉 DUMMY DATA: Yahan par humne display karne ke liye dummy products ka array banaya hai.
 const mockProducts = [
     { id: 1, name: "Authentic Ikat Saree", origin: "Telangana, India", price: "₹4,500", rating: 4.8, image: "/saree.jpg" },
     { id: 2, name: "Pashmina Wool Shawl", origin: "Kashmir, India", price: "₹8,200", rating: 4.9, image: "/shawl.jpg" },
@@ -17,13 +18,16 @@ const mockProducts = [
 ];
 
 export default function BuyerView() {
+    // 👉 CONTEXT HOOK: Cart mein items add karne ka function yahan se aa raha hai.
     const { addToCart } = useCart();
+
+    // 👉 STATE: Spin Wheel Modal khula hai ya band, yeh state handle karti hai.
     const [isWheelOpen, setIsWheelOpen] = useState(false);
 
     return (
         <div className="w-full space-y-16 pb-12 overflow-visible relative">
 
-            {/* Spin to Win Floating Button - Bottom Right */}
+            {/* 👉 SPIN TO WIN BUTTON: Yeh bottom-right corner mein floating gift icon wala button hai jisse modal khulta hai */}
             <button
                 onClick={() => setIsWheelOpen(true)}
                 className="fixed bottom-8 right-8 z-30 bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-full shadow-lg shadow-indigo-500/30 hover:scale-110 transition-transform animate-bounce"
@@ -31,10 +35,11 @@ export default function BuyerView() {
                 <Gift size={28} />
             </button>
 
-            {/* HERO - Ultra Premium 3D Vibe (Silk Balloons Preserved) */}
+            {/* 👉 HERO SECTION (3D VIBE): Yeh top ka bada banner hai jahan 3D glowing balls (Three.js/Fiber) render ho rahi hain */}
             <div className="relative h-[60vh] w-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(79,70,229,0.25)] bg-slate-950">
                 <div className="absolute inset-0 z-0">
                     <Canvas camera={{ position: [0, 0, 5] }}>
+                        {/* 3D Lighting and Objects */}
                         <ambientLight intensity={3} />
                         <directionalLight position={[2, 5, 2]} intensity={5} />
                         <spotLight position={[-2, 5, 5]} intensity={4} color="#ffffff" />
@@ -53,6 +58,7 @@ export default function BuyerView() {
                     </Canvas>
                 </div>
 
+                {/* 👉 HERO TEXT: "The Future of Handlooms" wala text yahan hai */}
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 pointer-events-none bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -77,7 +83,7 @@ export default function BuyerView() {
                 </div>
             </div>
 
-            {/* PRODUCTS */}
+            {/* 👉 PRODUCTS SECTION: Yahan 'mockProducts' array se data lekar grid mein cards display ho rahe hain */}
             <div>
                 <div className="flex flex-col mb-10">
                     <TextReveal
@@ -90,6 +96,7 @@ export default function BuyerView() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* 👉 MAP FUNCTION: Har ek product ke liye ek card generate kar raha hai */}
                     {mockProducts.map((product, index) => (
                         <ScrollReveal key={product.id} delay={index * 0.15}>
                             <HoverCard
@@ -110,6 +117,7 @@ export default function BuyerView() {
                                         </div>
                                     </div>
 
+                                    {/* 👉 BUY NOW BUTTON: Click karne par product cart mein add ho jata hai */}
                                     <button
                                         onClick={() => addToCart(product)}
                                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors active:scale-95"
@@ -124,7 +132,7 @@ export default function BuyerView() {
                 </div>
             </div>
 
-            {/* Spin Wheel Modal Component */}
+            {/* 👉 MODAL COMPONENT: Yeh woh spin wheel ka code hai jo button click par pop-up hota hai */}
             <SpinWheelModal isOpen={isWheelOpen} onClose={() => setIsWheelOpen(false)} />
         </div>
     );
