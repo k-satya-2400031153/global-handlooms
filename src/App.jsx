@@ -18,7 +18,7 @@ export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // 👉 ROUTING STATE: Yeh yaad rakhti hai ki abhi kaunsa tab (Role) open hai.
-    const [activeRole, s~etActiveRole] = useState("Buyer");
+    const [activeRole, setActiveRole] = useState("Buyer");
 
     // 👉 UI STATES: Yeh cursor ki position aur cart sidebar ko open/close karne ke liye hain.
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

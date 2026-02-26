@@ -13,7 +13,8 @@ export default function LoginPage({ onLoginSuccess }) {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/send-otp', {
+            // ✅ FIX 1: URL ke end mein 'send-otp' kar diya hai
+            const response = await fetch('https://global-handlooms.onrender.com/api/send-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -26,7 +27,7 @@ export default function LoginPage({ onLoginSuccess }) {
             }
         } catch (error) {
             console.error("Error connecting to backend:", error);
-            alert("Server down hai ya connect nahi ho raha. Localhost:5000 chalu hai?");
+            alert("Server down hai ya connect nahi ho raha.");
         } finally {
             setIsLoading(false);
         }
@@ -36,7 +37,8 @@ export default function LoginPage({ onLoginSuccess }) {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/verify-otp', {
+            // ✅ FIX 2: Localhost ko hatakar Render ka Live URL daal diya hai
+            const response = await fetch('https://global-handlooms.onrender.com/api/verify-otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp })
