@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
@@ -5,19 +6,24 @@ import { ShoppingCart } from "lucide-react";
 import { CartSidebar } from "./components/CartSidebar";
 import { useCart } from "./context/CartContext";
 
+// Import your pages
+import LoginPage from "./pages/LoginPage";
 import BuyerView from "./pages/BuyerView";
 import ArtisanView from "./pages/ArtisanView";
 import AdminView from "./pages/AdminView";
 import MarketingView from "./pages/MarketingView";
 
 export default function App() {
+    // 🔐 Yeh state decide karegi ki Login dikhana hai ya Dashboard
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     const [activeRole, setActiveRole] = useState("Buyer");
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const { cart } = useCart();
-
     const roles = ["Buyer", "Artisan", "Marketing", "Admin"];
+
     useEffect(() => {
         const updateMousePosition = (e) => {
             setMousePosition({ x: e.clientX, y: e.clientY });
@@ -28,22 +34,27 @@ export default function App() {
 
     const renderView = () => {
         switch (activeRole) {
-            case "Buyer":
-                return <BuyerView />;
-            case "Artisan":
-                return <ArtisanView />;
-            case "Marketing":
-                return <MarketingView />;
-            case "Admin":
-                return <AdminView />;
-            default:
-                return <BuyerView />;
+            case "Buyer": return <BuyerView />;
+            case "Artisan": return <ArtisanView />;
+            case "Marketing": return <MarketingView />;
+            case "Admin": return <AdminView />;
+            default: return <BuyerView />;
         }
     };
 
-    return (
-        <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 pb-12 overflow-hidden cursor-default">
+    // 🛑 AGAR LOGIN NAHI HAI: Toh sirf Login Page dikhao
+    if (!isAuthenticated) {
+        return <LoginPage onLoginSuccess={() => setIsAuthenticated(true)} />;
+    }
 
+    // ✅ AGAR LOGIN HAI: Toh tera main app dikhao (Smooth fade-in ke sath)
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }} // Explosion ke baad smooth fade in
+            className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 pb-12 overflow-hidden cursor-default"
+        >
             {/* Cursor */}
             <motion.div
                 className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400 pointer-events-none z-[100] mix-blend-screen shadow-[0_0_15px_rgba(6,182,212,0.8)] backdrop-blur-sm bg-cyan-400/10 hidden md:block"
@@ -58,12 +69,9 @@ export default function App() {
             </div>
 
             <div className="relative z-10 flex flex-col min-h-screen">
-
                 {/* Navbar */}
                 <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-950/60 backdrop-blur-xl shadow-lg">
                     <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-
-                        {/* Title */}
                         <motion.h1
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -73,7 +81,6 @@ export default function App() {
                             Global Handlooms
                         </motion.h1>
 
-                        {/* Nav buttons + cart */}
                         <div className="flex items-center">
                             <div className="flex gap-1 p-1 bg-slate-900/50 rounded-xl border border-white/5">
                                 {roles.map((role) => (
@@ -81,9 +88,7 @@ export default function App() {
                                         key={role}
                                         onClick={() => setActiveRole(role)}
                                         className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                            activeRole === role
-                                                ? "text-indigo-200"
-                                                : "text-slate-400 hover:text-slate-200"
+                                            activeRole === role ? "text-indigo-200" : "text-slate-400 hover:text-slate-200"
                                         }`}
                                     >
                                         {activeRole === role && (
@@ -105,11 +110,10 @@ export default function App() {
                                     className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
                                 >
                                     <ShoppingCart size={20} className="text-white" />
-
                                     {cart.length > 0 && (
                                         <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white shadow-[0_0_10px_rgba(79,70,229,0.8)]">
-                      {cart.length}
-                    </span>
+                                            {cart.length}
+                                        </span>
                                     )}
                                 </div>
                             </div>
@@ -133,13 +137,8 @@ export default function App() {
                     </AnimatePresence>
                 </main>
 
-                {/* ✅ Cart Sidebar mounted here */}
-                <CartSidebar
-                    isOpen={isCartOpen}
-                    onClose={() => setIsCartOpen(false)}
-                />
-
+                <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
             </div>
-        </div>
+        </motion.div>
     );
 }

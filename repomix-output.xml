@@ -1,0 +1,1205 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+eslint.config.js
+index.html
+package.json
+postcss.config.js
+public/kurta.jpg
+public/saree.jpg
+public/shawl.jpg
+public/vite.svg
+README.md
+src/App.css
+src/App.jsx
+src/assets/react.svg
+src/components/CartSidebar.jsx
+src/components/HoverCard.jsx
+src/components/ScrollReveal.jsx
+src/components/SpinWheelModal.jsx
+src/components/TextReveal.jsx
+src/context/CartContext.jsx
+src/index.css
+src/main.jsx
+src/pages/AdminView.jsx
+src/pages/ArtisanView.jsx
+src/pages/BuyerView.jsx
+src/pages/MarketingView.jsx
+src/utils.js
+tailwind.config.js
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.vercel
+</file>
+
+<file path="eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+])
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>global-handlooms</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "global-handlooms",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@splinetool/react-spline": "^4.1.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.34.3",
+    "lucide-react": "^0.575.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.5.0",
+    "three": "^0.183.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "vite": "^7.3.1"
+  }
+}
+</file>
+
+<file path="postcss.config.js">
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+</file>
+
+<file path="public/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257"><defs><linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%"><stop offset="0%" stop-color="#41D1FF"></stop><stop offset="100%" stop-color="#BD34FE"></stop></linearGradient><linearGradient id="IconifyId1813088fe1fbc01fb467" x1="43.376%" x2="50.316%" y1="2.242%" y2="89.03%"><stop offset="0%" stop-color="#FFEA83"></stop><stop offset="8.333%" stop-color="#FFDD35"></stop><stop offset="100%" stop-color="#FFA800"></stop></linearGradient></defs><path fill="url(#IconifyId1813088fe1fbc01fb466)" d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"></path><path fill="url(#IconifyId1813088fe1fbc01fb467)" d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"></path></svg>
+</file>
+
+<file path="README.md">
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+</file>
+
+<file path="src/App.css">
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+</file>
+
+<file path="src/assets/react.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+</file>
+
+<file path="src/components/CartSidebar.jsx">
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Trash2 } from "lucide-react";
+import { useCart } from "../context/CartContext";
+
+export function CartSidebar({ isOpen, onClose }) {
+    const { cart, removeFromCart } = useCart();
+
+    // Total price calculate karne ke liye simple logic
+    const totalPrice = cart.reduce((total, item) => {
+        const priceNumber = parseInt(item.price.replace(/[^0-9]/g, ''));
+        return total + (isNaN(priceNumber) ? 0 : priceNumber);
+    }, 0);
+
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    {/* Background Overlay */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                    />
+
+                    {/* Sidebar Drawer */}
+                    <motion.div
+                        initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed top-0 right-0 h-full w-full max-w-md bg-neutral-950 border-l border-white/10 z-50 p-6 flex flex-col"
+                    >
+                        {/* Header */}
+                        <div className="flex justify-between items-center border-b border-white/10 pb-4 mb-4">
+                            <h2 className="text-xl font-bold text-white">Your Cart ({cart.length})</h2>
+                            <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white transition-colors">
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        {/* Cart Items List */}
+                        <div className="flex-1 overflow-y-auto pr-2">
+                            {cart.length === 0 ? (
+                                <p className="text-neutral-500 text-center mt-10">Your cart is empty.</p>
+                            ) : (
+                                <div className="flex flex-col gap-4">
+                                    {cart.map((item, index) => (
+                                        <div key={index} className="flex justify-between items-center bg-neutral-900 p-4 rounded-lg border border-white/5">
+                                            <div>
+                                                <h3 className="text-white font-medium">{item.name}</h3>
+                                                <p className="text-neutral-400 text-sm">{item.price}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => removeFromCart(index)}
+                                                className="text-neutral-500 hover:text-red-400 transition-colors p-2"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer / Checkout */}
+                        {cart.length > 0 && (
+                            <div className="border-t border-white/10 pt-4 mt-4">
+                                <div className="flex justify-between items-center mb-4 text-lg">
+                                    <span className="text-neutral-300">Total</span>
+                                    <span className="text-white font-bold">₹{totalPrice.toLocaleString('en-IN')}</span>
+                                </div>
+                                <button className="w-full bg-white text-black py-3 rounded-lg font-medium hover:bg-neutral-200 transition-colors">
+                                    Proceed to Checkout
+                                </button>
+                            </div>
+                        )}
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
+    );
+}
+</file>
+
+<file path="src/components/HoverCard.jsx">
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export function HoverCard({ children, title, description }) {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="relative w-full max-w-sm rounded-xl border border-white/10 bg-neutral-950 p-6 overflow-hidden transition-colors hover:bg-neutral-900"
+        >
+            {/* Glow Effect */}
+            {isHovered && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 z-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent blur-xl"
+                />
+            )}
+
+            {/* Card Content */}
+            <div className="relative z-10">
+                <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+                <p className="text-neutral-400 text-sm">{description}</p>
+                <div className="mt-4">
+                    {children}
+                </div>
+            </div>
+        </div>
+    );
+}
+</file>
+
+<file path="src/components/ScrollReveal.jsx">
+import { motion } from "framer-motion";
+
+export function ScrollReveal({ children, delay = 0 }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }} // Element thoda screen mein aane ke baad trigger hoga
+            transition={{
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1], // Apple/Huly style ease-out curve
+                delay: delay
+            }}
+        >
+            {children}
+        </motion.div>
+    );
+}
+</file>
+
+<file path="src/components/SpinWheelModal.jsx">
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Gift, PartyPopper } from "lucide-react";
+import { cn } from "../utils";
+
+const prizes = [
+    { id: 1, text: "10% OFF", color: "from-indigo-500 to-indigo-700" },
+    { id: 2, text: "Try Again", color: "from-neutral-600 to-neutral-800" },
+    { id: 3, text: "Free Shipping", color: "from-cyan-500 to-cyan-700" },
+    { id: 4, text: "20% OFF", color: "from-purple-500 to-purple-700" },
+    { id: 5, text: "Better Luck Next Time", color: "from-neutral-600 to-neutral-800" },
+    { id: 6, text: "50% JACKPOT!", color: "from-yellow-500 to-orange-600" },
+];
+
+export function SpinWheelModal({ isOpen, onClose }) {
+    const [isSpinning, setIsSpinning] = useState(false);
+    const [rotation, setRotation] = useState(0);
+    const [result, setResult] = useState(null);
+    const [hasSpun, setHasSpun] = useState(false);
+
+    const segmentAngle = 360 / prizes.length;
+
+    const handleSpin = () => {
+        if (isSpinning || hasSpun) return;
+
+        setIsSpinning(true);
+        setResult(null);
+
+        // Random index select karo
+        const winningIndex = Math.floor(Math.random() * prizes.length);
+
+        // Calculate rotation: Kam se kam 5 full spins (360*5) + winning segment tak pahunchne ka angle
+        // Thoda random offset add kiya taaki needle segment ke beech mein ruke
+        const extraSpins = 360 * (5 + Math.floor(Math.random() * 3));
+        const winningAngle = winningIndex * segmentAngle + (segmentAngle / 2);
+        const totalRotation = rotation + extraSpins + (360 - winningAngle);
+
+        setRotation(totalRotation);
+
+        // Spin khatam hone ke baad result dikhao
+        setTimeout(() => {
+            setIsSpinning(false);
+            setResult(prizes[winningIndex]);
+            setHasSpun(true);
+        }, 5000); // Animation duration se match karna chahiye
+    };
+
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    {/* Backdrop */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                    >
+                        {/* Modal Content */}
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-neutral-950 border border-white/10 rounded-2xl p-6 w-full max-w-md relative overflow-hidden"
+                        >
+                            <button onClick={onClose} className="absolute top-4 right-4 text-neutral-400 hover:text-white">
+                                <X size={24} />
+                            </button>
+
+                            <div className="text-center mb-6">
+                                <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
+                                    <Gift className="text-indigo-400" /> Spin & Win!
+                                </h2>
+                                <p className="text-neutral-400 text-sm">Spin the wheel to get an exclusive discount.</p>
+                            </div>
+
+                            {/* Wheel Container */}
+                            <div className="relative w-64 h-64 mx-auto mb-8">
+                                {/* Pointer */}
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-20 w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[25px] border-t-white drop-shadow-lg"></div>
+
+                                {/* The Rotating Wheel */}
+                                <motion.div
+                                    className="w-full h-full rounded-full overflow-hidden border-4 border-white/20 relative"
+                                    animate={{ rotate: rotation }}
+                                    transition={{ duration: 5, ease: [0.15, 0.85, 0.35, 1] }} // Cubic-bezier for realistic slowdown
+                                    style={{
+                                        background: `conic-gradient(
+                      from 0deg,
+                      rgba(99, 102, 241, 0.8) 0deg 60deg,   /* Indigo */
+                      rgba(82, 82, 82, 0.8) 60deg 120deg,  /* Neutral */
+                      rgba(6, 182, 212, 0.8) 120deg 180deg, /* Cyan */
+                      rgba(168, 85, 247, 0.8) 180deg 240deg, /* Purple */
+                      rgba(82, 82, 82, 0.8) 240deg 300deg,  /* Neutral */
+                      rgba(234, 179, 8, 0.8) 300deg 360deg  /* Yellow */
+                    )`
+                                    }}
+                                >
+                                    {prizes.map((prize, i) => (
+                                        <div
+                                            key={prize.id}
+                                            className="absolute w-full h-full top-0 left-0 flex items-center justify-center"
+                                            style={{ transform: `rotate(${i * segmentAngle + segmentAngle/2}deg)` }}
+                                        >
+                       <span className="absolute top-4 text-white font-bold text-sm drop-shadow-md" style={{ transform: 'rotate(-90deg)' }}>
+                         {prize.text}
+                       </span>
+                                        </div>
+                                    ))}
+                                </motion.div>
+                            </div>
+
+                            {/* Controls & Result */}
+                            <div className="text-center h-20 flex items-center justify-center">
+                                {!result && !hasSpun && (
+                                    <button
+                                        onClick={handleSpin}
+                                        disabled={isSpinning}
+                                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-indigo-500/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSpinning ? "Spinning..." : "SPIN NOW!"}
+                                    </button>
+                                )}
+
+                                {result && (
+                                    <motion.div
+                                        initial={{ scale: 0.5, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        className="flex flex-col items-center"
+                                    >
+                                        {result.text.includes("Better") || result.text.includes("Try") ? (
+                                            <p className="text-xl font-bold text-neutral-300">{result.text}</p>
+                                        ) : (
+                                            <>
+                                                <p className="text-neutral-400 text-sm mb-1">Congratulations! You won:</p>
+                                                <p className={`text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r ${result.color} flex items-center gap-2`}>
+                                                    <PartyPopper /> {result.text}
+                                                </p>
+                                            </>
+                                        )}
+                                    </motion.div>
+                                )}
+                            </div>
+
+                        </motion.div>
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
+    );
+}
+</file>
+
+<file path="src/components/TextReveal.jsx">
+import { motion } from "framer-motion";
+
+export function TextReveal({ text, className }) {
+    const words = text.split(" ");
+
+    return (
+        <div className={`flex flex-wrap gap-x-2 ${className}`}>
+            {words.map((word, i) => (
+                <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        duration: 0.5,
+                        delay: i * 0.1, // Har word thode delay ke baad aayega
+                        ease: "easeOut"
+                    }}
+                >
+                    {word}
+                </motion.span>
+            ))}
+        </div>
+    );
+}
+</file>
+
+<file path="src/context/CartContext.jsx">
+import { createContext, useState, useContext } from 'react';
+
+const CartContext = createContext();
+
+export function CartProvider({ children }) {
+    const [cart, setCart] = useState([]);
+
+    const addToCart = (product) => {
+        setCart((prevCart) => [...prevCart, product]);
+    };
+
+    // Item delete karne ka function (index ke basis par)
+    const removeFromCart = (indexToRemove) => {
+        setCart((prevCart) => prevCart.filter((_, index) => index !== indexToRemove));
+    };
+
+    return (
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+            {children}
+        </CartContext.Provider>
+    );
+}
+
+export const useCart = () => useContext(CartContext);
+</file>
+
+<file path="src/utils.js">
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs) {
+    return twMerge(clsx(inputs));
+}
+</file>
+
+<file path="tailwind.config.js">
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+<file path="src/index.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-950 text-slate-100 m-0 min-h-screen selection:bg-indigo-500/30;
+}
+
+/* ===== Animated Gradient Text ===== */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-shift 4s ease infinite;
+}
+</file>
+
+<file path="src/main.jsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { CartProvider } from './context/CartContext.jsx' // Naya import
+
+createRoot(document.getElementById('root')).render(
+    <StrictMode>
+        <CartProvider>
+            <App />
+        </CartProvider>
+    </StrictMode>,
+)
+</file>
+
+<file path="src/pages/AdminView.jsx">
+import { Users, Activity, ShieldCheck, IndianRupee } from "lucide-react";
+
+export default function AdminView() {
+    const stats = [
+        { label: "Total Revenue", value: "₹24.5L", icon: <IndianRupee size={20} />, color: "text-green-400" },
+        { label: "Active Artisans", value: "842", icon: <Users size={20} />, color: "text-blue-400" },
+        { label: "Pending Verifications", value: "15", icon: <ShieldCheck size={20} />, color: "text-yellow-400" },
+        { label: "Platform Uptime", value: "99.9%", icon: <Activity size={20} />, color: "text-purple-400" }
+    ];
+
+    const pendingUsers = [
+        { id: "A101", name: "Ramesh Weaver", role: "Artisan", status: "Pending" },
+        { id: "A102", name: "Sita Textiles", role: "Artisan", status: "Pending" },
+        { id: "B405", name: "Global Imports LLC", role: "Buyer", status: "Flagged" }
+    ];
+
+    return (
+        <div className="p-8 min-h-screen bg-black text-white">
+            <h2 className="text-3xl font-bold mb-8">Admin Control Panel</h2>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                {stats.map((stat, i) => (
+                    <div key={i} className="p-6 rounded-xl border border-white/10 bg-neutral-900 flex flex-col gap-2">
+                        <div className={`flex items-center justify-between ${stat.color}`}>
+                            {stat.icon}
+                            <span className="text-2xl font-bold text-white">{stat.value}</span>
+                        </div>
+                        <span className="text-sm text-neutral-400">{stat.label}</span>
+                    </div>
+                ))}
+            </div>
+
+            {/* User Management Section */}
+            <div className="rounded-xl border border-white/10 bg-neutral-900 overflow-hidden">
+                <div className="p-6 border-b border-white/10">
+                    <h3 className="text-xl font-semibold">User Management & Alerts</h3>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                        <thead className="bg-neutral-950 text-neutral-400">
+                        <tr>
+                            <th className="px-6 py-4 font-medium">User ID</th>
+                            <th className="px-6 py-4 font-medium">Name</th>
+                            <th className="px-6 py-4 font-medium">Role</th>
+                            <th className="px-6 py-4 font-medium">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                        {pendingUsers.map((user, i) => (
+                            <tr key={i} className="hover:bg-white/5 transition-colors">
+                                <td className="px-6 py-4 font-mono text-neutral-300">{user.id}</td>
+                                <td className="px-6 py-4">{user.name}</td>
+                                <td className="px-6 py-4 text-neutral-400">{user.role}</td>
+                                <td className="px-6 py-4 flex gap-3">
+                                    <button className="px-3 py-1 bg-green-500/10 text-green-400 rounded border border-green-500/20 hover:bg-green-500/20 transition-colors">Verify</button>
+                                    <button className="px-3 py-1 bg-red-500/10 text-red-400 rounded border border-red-500/20 hover:bg-red-500/20 transition-colors">Block</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}
+</file>
+
+<file path="src/pages/ArtisanView.jsx">
+import { Plus, Edit, Trash2, Package, TrendingUp, ShoppingCart } from 'lucide-react';
+import { HoverCard } from "../components/HoverCard";
+
+export default function ArtisanView() {
+    const inventory = [
+        { id: 1, name: "Authentic Ikat Saree", category: "Saree", stock: 12, price: "₹4,500" },
+        { id: 2, name: "Pashmina Wool Shawl", category: "Winterwear", stock: 3, price: "₹8,200" },
+        { id: 3, name: "Khadi Cotton Kurta", category: "Menswear", stock: 0, price: "₹1,200" },
+    ];
+
+    return (
+        <div className="space-y-8">
+
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <div>
+                    <h2 className="text-3xl font-semibold text-white mb-2">Artisan Dashboard</h2>
+                    <p className="text-slate-400">Manage your handloom inventory and orders.</p>
+                </div>
+                <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium">
+                    <Plus className="w-5 h-5" /> Add Product
+                </button>
+            </div>
+
+            {/* Stats using HoverCard */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <HoverCard title="Total Products" description="Items listed">
+                    <Package className="w-6 h-6 text-indigo-400" />
+                </HoverCard>
+
+                <HoverCard title="Active Orders" description="Global orders">
+                    <ShoppingCart className="w-6 h-6 text-emerald-400" />
+                </HoverCard>
+
+                <HoverCard title="Monthly Revenue" description="₹42,500">
+                    <TrendingUp className="w-6 h-6 text-amber-400" />
+                </HoverCard>
+            </div>
+
+            {/* Inventory */}
+            <div className="bg-slate-900/40 border border-white/10 rounded-2xl overflow-hidden">
+                <div className="p-6 border-b border-white/10">
+                    <h3 className="text-lg font-medium text-white">Inventory</h3>
+                </div>
+
+                <table className="w-full text-left">
+                    <thead className="bg-slate-800/50 text-slate-300 text-sm">
+                    <tr>
+                        <th className="p-4">Product</th>
+                        <th className="p-4">Category</th>
+                        <th className="p-4">Stock</th>
+                        <th className="p-4">Price</th>
+                        <th className="p-4 text-right">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody className="text-sm text-slate-400">
+                    {inventory.map(item => (
+                        <tr key={item.id} className="border-b border-white/5">
+                            <td className="p-4 text-slate-200">{item.name}</td>
+                            <td className="p-4">{item.category}</td>
+                            <td className="p-4">{item.stock}</td>
+                            <td className="p-4">{item.price}</td>
+                            <td className="p-4 flex justify-end gap-2">
+                                <Edit className="w-4 h-4 text-indigo-400" />
+                                <Trash2 className="w-4 h-4 text-red-400" />
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    );
+}
+</file>
+
+<file path="src/App.jsx">
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
+
+import { CartSidebar } from "./components/CartSidebar";
+import { useCart } from "./context/CartContext";
+
+import BuyerView from "./pages/BuyerView";
+import ArtisanView from "./pages/ArtisanView";
+import AdminView from "./pages/AdminView";
+import MarketingView from "./pages/MarketingView";
+
+export default function App() {
+    const [activeRole, setActiveRole] = useState("Buyer");
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    const { cart } = useCart();
+
+    const roles = ["Buyer", "Artisan", "Marketing", "Admin"];
+    useEffect(() => {
+        const updateMousePosition = (e) => {
+            setMousePosition({ x: e.clientX, y: e.clientY });
+        };
+        window.addEventListener("mousemove", updateMousePosition);
+        return () => window.removeEventListener("mousemove", updateMousePosition);
+    }, []);
+
+    const renderView = () => {
+        switch (activeRole) {
+            case "Buyer":
+                return <BuyerView />;
+            case "Artisan":
+                return <ArtisanView />;
+            case "Marketing":
+                return <MarketingView />;
+            case "Admin":
+                return <AdminView />;
+            default:
+                return <BuyerView />;
+        }
+    };
+
+    return (
+        <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 pb-12 overflow-hidden cursor-default">
+
+            {/* Cursor */}
+            <motion.div
+                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-cyan-400 pointer-events-none z-[100] mix-blend-screen shadow-[0_0_15px_rgba(6,182,212,0.8)] backdrop-blur-sm bg-cyan-400/10 hidden md:block"
+                animate={{ x: mousePosition.x - 16, y: mousePosition.y - 16 }}
+                transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
+            />
+
+            {/* Background glows */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full blur-[120px] mix-blend-screen animate-[spin_10s_linear_infinite]" />
+                <div className="absolute bottom-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen animate-[spin_15s_linear_infinite_reverse]" />
+            </div>
+
+            <div className="relative z-10 flex flex-col min-h-screen">
+
+                {/* Navbar */}
+                <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-950/60 backdrop-blur-xl shadow-lg">
+                    <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+
+                        {/* Title */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="text-2xl md:text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 animate-gradient drop-shadow-[0_0_20px_rgba(79,70,229,0.35)]"
+                        >
+                            Global Handlooms
+                        </motion.h1>
+
+                        {/* Nav buttons + cart */}
+                        <div className="flex items-center">
+                            <div className="flex gap-1 p-1 bg-slate-900/50 rounded-xl border border-white/5">
+                                {roles.map((role) => (
+                                    <button
+                                        key={role}
+                                        onClick={() => setActiveRole(role)}
+                                        className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                            activeRole === role
+                                                ? "text-indigo-200"
+                                                : "text-slate-400 hover:text-slate-200"
+                                        }`}
+                                    >
+                                        {activeRole === role && (
+                                            <motion.div
+                                                layoutId="active-nav-tab"
+                                                className="absolute inset-0 bg-indigo-500/20 border border-indigo-500/30 shadow-[0_0_15px_rgba(79,70,229,0.2)] rounded-lg z-0"
+                                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                            />
+                                        )}
+                                        <span className="relative z-10">{role} View</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Cart Icon */}
+                            <div className="flex items-center ml-4 pl-4 border-l border-white/20">
+                                <div
+                                    onClick={() => setIsCartOpen(true)}
+                                    className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                                >
+                                    <ShoppingCart size={20} className="text-white" />
+
+                                    {cart.length > 0 && (
+                                        <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white shadow-[0_0_10px_rgba(79,70,229,0.8)]">
+                      {cart.length}
+                    </span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                {/* Page content */}
+                <main className="max-w-7xl mx-auto px-6 flex-grow w-full pt-32 md:pt-28">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeRole}
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -15 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="w-full h-full"
+                        >
+                            {renderView()}
+                        </motion.div>
+                    </AnimatePresence>
+                </main>
+
+                {/* ✅ Cart Sidebar mounted here */}
+                <CartSidebar
+                    isOpen={isCartOpen}
+                    onClose={() => setIsCartOpen(false)}
+                />
+
+            </div>
+        </div>
+    );
+}
+</file>
+
+<file path="src/pages/MarketingView.jsx">
+import { Globe, TrendingUp, MousePointerClick, Target } from "lucide-react";
+
+export default function MarketingView() {
+    const analytics = [
+        { label: "Global Reach", value: "1.2M", icon: <Globe size={20} />, color: "text-blue-400" },
+        { label: "Conversion Rate", value: "3.4%", icon: <TrendingUp size={20} />, color: "text-green-400" },
+        { label: "Total Clicks", value: "84.5K", icon: <MousePointerClick size={20} />, color: "text-purple-400" },
+        { label: "Active Campaigns", value: "12", icon: <Target size={20} />, color: "text-red-400" }
+    ];
+
+    const campaigns = [
+        { name: "Diwali Handloom Fest", region: "North America", spend: "₹3,75,000", status: "Active" },
+        { name: "Silk Route Revival", region: "Europe", spend: "₹1,75,000", status: "Active" },
+        { name: "Summer Cotton Edit", region: "Asia Pacific", spend: "₹65,000", status: "Paused" }
+    ];
+
+    return (
+        <div className="p-8 min-h-screen bg-black text-white">
+            <h2 className="text-3xl font-bold mb-8">Marketing Analytics</h2>
+
+            {/* Analytics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                {analytics.map((stat, i) => (
+                    <div key={i} className="p-6 rounded-xl border border-white/10 bg-neutral-900 flex flex-col gap-2">
+                        <div className={`flex items-center justify-between ${stat.color}`}>
+                            {stat.icon}
+                            <span className="text-2xl font-bold text-white">{stat.value}</span>
+                        </div>
+                        <span className="text-sm text-neutral-400">{stat.label}</span>
+                    </div>
+                ))}
+            </div>
+
+            {/* Active Campaigns Section */}
+            <div className="rounded-xl border border-white/10 bg-neutral-900 overflow-hidden">
+                <div className="p-6 border-b border-white/10">
+                    <h3 className="text-xl font-semibold">Campaign Performance</h3>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                        <thead className="bg-neutral-950 text-neutral-400">
+                        <tr>
+                            <th className="px-6 py-4 font-medium">Campaign Name</th>
+                            <th className="px-6 py-4 font-medium">Target Region</th>
+                            <th className="px-6 py-4 font-medium">Ad Spend</th>
+                            <th className="px-6 py-4 font-medium">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                        {campaigns.map((campaign, i) => (
+                            <tr key={i} className="hover:bg-white/5 transition-colors">
+                                <td className="px-6 py-4 font-medium text-white">{campaign.name}</td>
+                                <td className="px-6 py-4 text-neutral-400">{campaign.region}</td>
+                                <td className="px-6 py-4 font-mono text-neutral-300">{campaign.spend}</td>
+                                <td className="px-6 py-4">
+                    <span className={`px-2 py-1 rounded text-xs border ${
+                        campaign.status === 'Active'
+                            ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                            : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+                    }`}>
+                      {campaign.status}
+                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}
+</file>
+
+<file path="src/pages/BuyerView.jsx">
+import { useState } from "react";
+import { ShoppingBag, Star, Gift } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { MeshDistortMaterial, Sphere, Float, Sparkles, Stars } from '@react-three/drei';
+import { useCart } from "../context/CartContext";
+
+import { HoverCard } from "../components/HoverCard";
+import { ScrollReveal } from "../components/ScrollReveal";
+import { TextReveal } from "../components/TextReveal";
+import { SpinWheelModal } from "../components/SpinWheelModal";
+
+const mockProducts = [
+    { id: 1, name: "Authentic Ikat Saree", origin: "Telangana, India", price: "₹4,500", rating: 4.8, image: "/saree.jpg" },
+    { id: 2, name: "Pashmina Wool Shawl", origin: "Kashmir, India", price: "₹8,200", rating: 4.9, image: "/shawl.jpg" },
+    { id: 3, name: "Khadi Cotton Kurta", origin: "Gujarat, India", price: "₹1,200", rating: 4.5, image: "/kurta.jpg" },
+];
+
+export default function BuyerView() {
+    const { addToCart } = useCart();
+    const [isWheelOpen, setIsWheelOpen] = useState(false);
+
+    return (
+        <div className="w-full space-y-16 pb-12 overflow-visible relative">
+
+            {/* Spin to Win Floating Button - Bottom Right */}
+            <button
+                onClick={() => setIsWheelOpen(true)}
+                className="fixed bottom-8 right-8 z-30 bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-full shadow-lg shadow-indigo-500/30 hover:scale-110 transition-transform animate-bounce"
+            >
+                <Gift size={28} />
+            </button>
+
+            {/* HERO - Ultra Premium 3D Vibe (Silk Balloons Preserved) */}
+            <div className="relative h-[60vh] w-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(79,70,229,0.25)] bg-slate-950">
+                <div className="absolute inset-0 z-0">
+                    <Canvas camera={{ position: [0, 0, 5] }}>
+                        <ambientLight intensity={3} />
+                        <directionalLight position={[2, 5, 2]} intensity={5} />
+                        <spotLight position={[-2, 5, 5]} intensity={4} color="#ffffff" />
+                        <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1.5} />
+                        <Sparkles count={150} scale={10} size={3} speed={0.4} opacity={0.5} color="#4f46e5" />
+                        <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
+                            <Sphere args={[1, 100, 200]} scale={2.2} position={[2, 0, -1]}>
+                                <MeshDistortMaterial color="#4f46e5" emissive="#4f46e5" emissiveIntensity={0.8} distort={0.6} speed={2} roughness={0.1} metalness={0.4} />
+                            </Sphere>
+                        </Float>
+                        <Float speed={1.5} rotationIntensity={2} floatIntensity={1.5}>
+                            <Sphere args={[1, 100, 200]} scale={1.8} position={[-2, 1, -2]}>
+                                <MeshDistortMaterial color="#06b6d4" emissive="#06b6d4" emissiveIntensity={0.8} distort={0.4} speed={1.5} roughness={0.1} metalness={0.4} />
+                            </Sphere>
+                        </Float>
+                    </Canvas>
+                </div>
+
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 pointer-events-none bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.3 }}
+                        className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl tracking-tight"
+                    >
+                        The Future of{" "}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 animate-gradient">
+                            Handlooms
+                        </span>
+                    </motion.h2>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 0.6 }}
+                        className="text-lg md:text-xl text-slate-300 max-w-2xl drop-shadow-lg"
+                    >
+                        Experience authentic Indian craftsmanship.
+                    </motion.p>
+                </div>
+            </div>
+
+            {/* PRODUCTS */}
+            <div>
+                <div className="flex flex-col mb-10">
+                    <TextReveal
+                        text="Featured Collections"
+                        className="text-3xl md:text-4xl font-semibold text-white mb-2"
+                    />
+                    <p className="text-slate-400 mt-2">
+                        Hover over the artifacts to see them tilt in 3D space.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {mockProducts.map((product, index) => (
+                        <ScrollReveal key={product.id} delay={index * 0.15}>
+                            <HoverCard
+                                title={product.name}
+                                description={product.origin}
+                                className="p-0 overflow-hidden h-full flex flex-col"
+                            >
+                                <div className="aspect-[4/3] overflow-hidden">
+                                    <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+                                </div>
+
+                                <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-2xl font-bold text-white">{product.price}</span>
+                                        <div className="flex items-center gap-1 text-amber-400 text-sm">
+                                            <Star className="w-4 h-4 fill-amber-400" />
+                                            {product.rating}
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        onClick={() => addToCart(product)}
+                                        className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors active:scale-95"
+                                    >
+                                        <ShoppingBag className="w-4 h-4" />
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </HoverCard>
+                        </ScrollReveal>
+                    ))}
+                </div>
+            </div>
+
+            {/* Spin Wheel Modal Component */}
+            <SpinWheelModal isOpen={isWheelOpen} onClose={() => setIsWheelOpen(false)} />
+        </div>
+    );
+}
+</file>
+
+</files>
