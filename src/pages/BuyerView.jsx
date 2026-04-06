@@ -431,10 +431,12 @@ const BuyerView = () => {
                                                     <span className="text-sm font-mono font-black text-emerald-400 border border-emerald-500/25 bg-emerald-900/15 px-3 py-1.5 rounded-xl">
                                                         ₹{order.totalAmount?.toLocaleString('en-IN')}
                                                     </span>
-                                                    <button onClick={() => handleCancelOrder(order._id)}
-                                                        className="bg-red-400/5 text-red-400 border border-red-400/25 px-3 py-1.5 text-[10px] font-mono uppercase rounded-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-red-400 hover:text-white">
-                                                        Void TX
-                                                    </button>
+                                                    {['Pending', 'Processing'].includes(displayStatus) && (
+                                                        <button onClick={() => handleCancelOrder(order._id)}
+                                                            className="bg-red-400/5 text-red-400 border border-red-400/25 px-3 py-1.5 text-[10px] font-mono uppercase rounded-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-red-400 hover:text-white">
+                                                            Cancel Order
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
 
