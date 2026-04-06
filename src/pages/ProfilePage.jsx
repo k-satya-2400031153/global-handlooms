@@ -160,7 +160,7 @@ export default function ProfilePage() {
                             <div className="flex gap-3 flex-wrap">
                                 {[
                                     { label: 'Orders', value: orders.length, color: rc.color },
-                                    { label: 'Addresses', value: (profile.savedAddresses || []).length, color: '#a855f7' },
+                                    ...(profile.role === 'Buyer' ? [{ label: 'Addresses', value: (profile.savedAddresses || []).length, color: '#a855f7' }] : []),
                                     { label: 'Member Since', value: new Date(profile.createdAt).getFullYear(), color: '#fbbf24' },
                                 ].map(stat => (
                                     <div key={stat.label} className="glass-card px-4 py-3 text-center min-w-[80px]" style={{ borderRadius: '16px' }}>
@@ -284,7 +284,12 @@ export default function ProfilePage() {
                                 <div className="glass-card p-16 text-center">
                                     <Package size={40} className="mx-auto mb-4" style={{ color: 'rgba(255,255,255,0.1)' }} />
                                     <p className="text-gray-600 font-mono text-xs uppercase tracking-widest">No orders yet.</p>
-                                    <Link to="/buyer" className="inline-block mt-4 text-[#00f5ff] text-xs font-mono uppercase tracking-widest hover:underline">Browse Market →</Link>
+                                    {profile.role === 'Buyer' && (
+                                        <Link to="/buyer" className="inline-block mt-4 text-[#00f5ff] text-xs font-mono uppercase tracking-widest hover:underline">Browse Market →</Link>
+                                    )}
+                                    {profile.role === 'Artisan' && (
+                                        <Link to="/artisan" className="inline-block mt-4 text-[#a855f7] text-xs font-mono uppercase tracking-widest hover:underline">Go to Asset Forge →</Link>
+                                    )}
                                 </div>
                             ) : orders.map(order => {
                                 const stepIndex = STEPS.indexOf(order.status);
