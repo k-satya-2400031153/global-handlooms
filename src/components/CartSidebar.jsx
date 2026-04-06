@@ -45,7 +45,7 @@ export function CartSidebar({ isOpen, onClose }) {
                                         <div key={index} className="flex justify-between items-center glass-panel p-4 rounded-xl group hover:border-cyberCyan/50 transition-colors">
                                             <div>
                                                 <h3 className="text-white font-medium group-hover:text-cyberCyan transition-colors">{item.name}</h3>
-                                                <p className="text-emerald-400 font-mono text-sm">${item.price}</p>
+                                                <p className="text-emerald-400 font-mono text-sm">₹{item.price}</p>
                                             </div>
                                             <button
                                                 onClick={() => removeFromCart(index)}
@@ -63,7 +63,7 @@ export function CartSidebar({ isOpen, onClose }) {
                             <div className="border-t border-surfaceBorder pt-4 mt-4">
                                 <div className="flex justify-between items-center mb-6 text-lg">
                                     <span className="text-gray-400 font-mono text-xs uppercase tracking-widest">Total Liquidity</span>
-                                    <span className="text-emerald-400 font-black text-2xl">${totalPrice.toLocaleString('en-US')}</span>
+                                    <span className="text-emerald-400 font-black text-2xl">₹{totalPrice.toLocaleString('en-IN')}</span>
                                 </div>
                                 <button className="w-full bg-cyberCyan/10 border border-cyberCyan/50 text-cyberCyan py-4 rounded-lg font-black uppercase tracking-[0.2em] text-xs hover:bg-cyberCyan hover:text-black transition-all shadow-[0_0_20px_rgba(0,240,255,0.2)]">
                                     Execute Contract

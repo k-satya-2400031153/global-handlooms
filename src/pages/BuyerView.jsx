@@ -219,10 +219,10 @@ const BuyerView = () => {
                             <div className="space-y-4">
                                 {cart.map((item) => (
                                     <div key={item._id} className="glass-panel p-4 flex items-center justify-between">
-                                        <div className="flex items-center gap-4">{item.image && <img src={item.image} alt="thumb" className="w-12 h-12 rounded object-cover border border-white/20" />}<div><h3 className="font-bold text-white">{item.title}</h3><p className="text-[10px] font-mono text-cyberCyan uppercase">${item.price} per unit</p></div></div>
+                                        <div className="flex items-center gap-4">{item.image && <img src={item.image} alt="thumb" className="w-12 h-12 rounded object-cover border border-white/20" />}<div><h3 className="font-bold text-white">{item.title}</h3><p className="text-[10px] font-mono text-cyberCyan uppercase">₹{item.price} per unit</p></div></div>
                                         <div className="flex items-center gap-6">
                                             <div className="flex items-center bg-black/50 border border-white/10 rounded p-1"><button onClick={() => updateCartQty(item._id, -1, item.inventory)} className="w-6 h-6 text-gray-400 hover:text-white">-</button><span className="w-8 text-center text-xs font-mono text-white">{item.cartQty}</span><button onClick={() => updateCartQty(item._id, 1, item.inventory)} className="w-6 h-6 text-gray-400 hover:text-white">+</button></div>
-                                            <span className="text-sm font-mono text-emerald-400 w-16 text-right">${item.price * item.cartQty}</span>
+                                            <span className="text-sm font-mono text-emerald-400 w-16 text-right">₹{item.price * item.cartQty}</span>
                                             <button onClick={() => removeFromCart(item._id)} className="text-alertRed text-xs font-mono uppercase hover:underline">Remove</button>
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@ const BuyerView = () => {
                                 <div className="mt-8 bg-cyberCyan/10 border border-cyberCyan/30 p-6 rounded-xl flex justify-between items-center backdrop-blur-md">
                                     <div>
                                         <p className="text-[10px] font-mono text-gray-400 uppercase">Total Liquidity Required</p>
-                                        <p className="text-4xl font-black text-emerald-400">${cartTotal}</p>
+                                        <p className="text-4xl font-black text-emerald-400">₹{cartTotal.toLocaleString('en-IN')}</p>
                                         <p className="text-[10px] text-emerald-400 font-mono mt-1">{cartTotal > 999 ? '✓ Free Delivery' : '+ ₹49 delivery'}</p>
                                     </div>
                                     <button onClick={handleGoToCheckout} className="px-8 py-4 bg-cyberCyan text-black font-black uppercase tracking-[0.2em] text-xs rounded hover:bg-[#5affff] shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-all">
