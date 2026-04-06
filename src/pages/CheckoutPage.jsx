@@ -78,6 +78,8 @@ export default function CheckoutPage() {
     };
 
     // ----- Simulated Payment Flow -----
+    const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
     const handlePayNow = async () => {
         if (selectedPayment === 'upi' && !upiId.includes('@')) {
             toast.error('Please enter a valid UPI ID (e.g. name@upi)');
@@ -120,9 +122,7 @@ export default function CheckoutPage() {
         }
     };
 
-    const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
-    // ===== RENDER =====
     return (
         <div className="min-h-screen bg-background text-gray-200 relative overflow-x-hidden">
             {/* Ambient glows */}
