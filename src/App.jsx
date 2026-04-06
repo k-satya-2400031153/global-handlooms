@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import CursorFX from './components/CursorFX';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -49,8 +50,8 @@ function App() {
                 localStorage.setItem('user', JSON.stringify(d.user));
                 localStorage.setItem('token', d.token);
                 window.location.href = '/admin';
-            } else alert('❌ Access Denied.');
-        } catch { alert('❌ Server unreachable.'); }
+            } else toast.error('Access Denied — invalid override code.');
+        } catch { toast.error('Backend unreachable. Is the server running?'); }
     };
 
     // --- SECRET BACKDOOR 2: MARKETING (Bottom Left) ---
@@ -67,8 +68,8 @@ function App() {
                 localStorage.setItem('user', JSON.stringify(d.user));
                 localStorage.setItem('token', d.token);
                 window.location.href = '/marketing';
-            } else alert('❌ Server unreachable.'); }
-        catch { alert('❌ Server unreachable.'); }
+            } else toast.error('Access Denied — invalid override code.'); }
+        catch { toast.error('Backend unreachable. Is the server running?'); }
     };
 
     return (
