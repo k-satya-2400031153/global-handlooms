@@ -1,82 +1,314 @@
-// 👉 IMPORTS: Yahan hum UI icons (lucide-react) aur apna custom 'HoverCard' component import kar rahe hain.
-import { Plus, Edit, Trash2, Package, TrendingUp, ShoppingCart } from 'lucide-react';
-import { HoverCard } from "../components/HoverCard";
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { Upload, Package, Edit3, Trash2, PlusCircle, X, TrendingUp, Layers } from 'lucide-react';
 
-export default function ArtisanView() {
-    // 👉 DUMMY INVENTORY DATA: Yeh artisan ke products ki static list hai jo abhi UI test karne ke liye banayi gayi hai. Asli app mein yeh data backend database se fetch hoga.
-    const inventory = [
-        { id: 1, name: "Authentic Ikat Saree", category: "Saree", stock: 12, price: "₹4,500" },
-        { id: 2, name: "Pashmina Wool Shawl", category: "Winterwear", stock: 3, price: "₹8,200" },
-        { id: 3, name: "Khadi Cotton Kurta", category: "Menswear", stock: 0, price: "₹1,200" },
-    ];
+const API = import.meta.env.VITE_API_URL;
+const EMPTY = { title: '', price: '', inventory: '', originRegion: '', materialsUsed: '', image: '' };
+
+const ArtisanView = () => {
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState('');
+    const [formData, setFormData] = useState(EMPTY);
+    const [editingId, setEditingId] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        let user = {};
+        try { const s = localStorage.getItem('user'); if (s) user = JSON.parse(s); } catch {}
+        if (user.role !== 'Artisan') navigate('/');
+        else fetchMyProducts();
+    }, [navigate]);
+
+    const fetchMyProducts = async () => {
+        setIsLoading(true);
+        const token = localStorage.getItem('token');
+        try {
+            const r = await fetch(`${API}/products/artisan`, { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!r.ok) { const d = await r.json(); setLoadError(d.message || 'Failed to load'); setIsLoading(false); return; }
+            setLoadError('');
+            const data = await r.json();
+            setProducts(data.data || data);
+        } catch { setLoadError('Network error.'); }
+        setIsLoading(false);
+    };
+
+    const handleImageUpload = (file) => {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onloadend = () => setFormData(prev => ({ ...prev, image: reader.result }));
+        reader.readAsDataURL(file);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault(); setIsDragging(false);
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) handleImageUpload(file);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        const payload = { ...formData, materialsUsed: formData.materialsUsed.split(',').map(m => m.trim()) };
+        const tid = toast.loading(editingId ? 'Updating asset...' : 'Deploying to network...');
+        try {
+            const r = await fetch(editingId ? `${API}/products/${editingId}` : `${API}/products`, {
+                method: editingId ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(payload),
+            });
+            const result = await r.json();
+            if (r.ok) {
+                fetchMyProducts();
+                setFormData(EMPTY); setEditingId(null);
+                toast.success(editingId ? 'Asset updated!' : 'Asset live on network!', { id: tid });
+            } else toast.error(result.message || 'Error', { id: tid });
+        } catch { toast.error('Network failure', { id: tid }); }
+    };
+
+    const handleEdit = (p) => {
+        setEditingId(p._id);
+        setFormData({ title: p.title, price: p.price, inventory: p.inventory, originRegion: p.originRegion || '', materialsUsed: (p.materialsUsed || []).join(', '), image: p.image || '' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleBurn = async (id) => {
+        const token = localStorage.getItem('token');
+        const tid = toast.loading('Archiving...');
+        try {
+            const r = await fetch(`${API}/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+            if (r.ok) { fetchMyProducts(); toast.success('Asset archived.', { id: tid }); }
+            else toast.error('Failed', { id: tid });
+        } catch { toast.error('Error', { id: tid }); }
+    };
+
+    const totalValue = products.reduce((s, p) => s + p.price * p.inventory, 0);
 
     return (
-        <div className="space-y-8">
+        <div className="min-h-[calc(100vh-80px)] bg-background text-gray-200 relative overflow-hidden">
+            {/* BG Orbs */}
+            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-neonIndigo/10 rounded-full blur-[200px] pointer-events-none animate-float" />
+            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-cyberCyan/8 rounded-full blur-[200px] pointer-events-none animate-float-delayed" />
 
-            {/* 👉 HEADER & ADD BUTTON: Yahan dashboard ka title aur naya product add karne ka 'Add Product' button lagaya gaya hai */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                <div>
-                    <h2 className="text-3xl font-semibold text-white mb-2">Artisan Dashboard</h2>
-                    <p className="text-slate-400">Manage your handloom inventory and orders.</p>
+            <div className="max-w-7xl mx-auto px-4 py-8 relative z-10">
+                {/* Header */}
+                <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 pb-6 border-b border-white/[0.06]">
+                    <div className="flex flex-wrap justify-between items-end gap-6">
+                        <div>
+                            <p className="text-[10px] font-mono text-neonIndigo uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+                                <span className="status-dot-live" style={{ background: '#6366f1', boxShadow: '0 0 0 0 rgba(99,102,241,0.5)', animation: 'statusPing 2s ease-out infinite' }} />
+                                Artisan Creator Hub
+                            </p>
+                            <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-neonIndigo via-white to-cyberCyan">
+                                ASSET FORGE
+                            </h1>
+                        </div>
+                        {/* KPI strip */}
+                        <div className="flex gap-3 flex-wrap">
+                            {[
+                                { icon: Package, label: 'Active Assets', value: products.length, color: 'text-neonIndigo' },
+                                { icon: TrendingUp, label: 'Portfolio Value', value: `₹${totalValue.toLocaleString('en-IN')}`, color: 'text-emerald-400' },
+                                { icon: Layers, label: 'Total Units', value: products.reduce((s, p) => s + p.inventory, 0), color: 'text-cyberCyan' },
+                            ].map(k => {
+                                const Icon = k.icon;
+                                return (
+                                    <div key={k.label} className="kpi-card min-w-[120px]">
+                                        <Icon size={13} className={`${k.color} mx-auto mb-1`} />
+                                        <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">{k.label}</p>
+                                        <p className={`font-black text-lg ${k.color}`}>{k.value}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </motion.header>
+
+                <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8">
+                    {/* ── FORM PANEL ── */}
+                    <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+                        <div className={`glass-panel p-6 relative overflow-hidden ${editingId ? 'border-neonIndigo/40 shadow-neon-indigo' : ''}`}>
+                            {editingId && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-neonIndigo to-transparent" />}
+
+                            <div className="flex items-center justify-between mb-5">
+                                <h2 className="text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
+                                    {editingId ? <Edit3 size={14} className="text-neonIndigo" /> : <PlusCircle size={14} className="text-cyberCyan" />}
+                                    {editingId ? 'Update Asset' : 'Deploy New Asset'}
+                                </h2>
+                                {editingId && (
+                                    <button onClick={() => { setEditingId(null); setFormData(EMPTY); }} data-danger
+                                        className="w-7 h-7 rounded-lg bg-white/5 hover:bg-alertRed/20 hover:text-alertRed text-gray-500 flex items-center justify-center transition-all">
+                                        <X size={13} />
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* Image Drop Zone */}
+                            <div
+                                onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+                                onDragLeave={() => setIsDragging(false)}
+                                onDrop={handleDrop}
+                                onClick={() => fileInputRef.current.click()}
+                                className={`relative w-full h-44 rounded-xl mb-5 overflow-hidden flex flex-col items-center justify-center transition-all duration-300 group
+                                    ${isDragging ? 'border-2 border-cyberCyan bg-cyberCyan/10' : 'border border-dashed border-white/15 bg-black/40 hover:border-neonIndigo/50 hover:bg-neonIndigo/5'}`}
+                            >
+                                {formData.image ? (
+                                    <>
+                                        <img src={formData.image} alt="Preview" className="absolute inset-0 w-full h-full object-contain p-3" />
+                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity gap-2">
+                                            <Upload size={20} className="text-white" />
+                                            <span className="text-xs font-mono text-white">Replace Image</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="flex flex-col items-center gap-2 pointer-events-none select-none">
+                                        <Upload size={24} className={isDragging ? 'text-cyberCyan' : 'text-gray-600'} />
+                                        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest">
+                                            {isDragging ? 'Drop to upload' : 'Click or drag image'}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                            <input type="file" accept="image/*" ref={fileInputRef} onChange={e => handleImageUpload(e.target.files[0])} className="hidden" />
+
+                            <form onSubmit={handleSubmit} className="space-y-3">
+                                {[
+                                    { placeholder: 'Product Title', key: 'title', type: 'text' },
+                                ].map(f => (
+                                    <div key={f.key}>
+                                        <input type={f.type} placeholder={f.placeholder} value={formData[f.key]}
+                                            onChange={e => setFormData({ ...formData, [f.key]: e.target.value })}
+                                            className="input-field" required />
+                                    </div>
+                                ))}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <input type="number" placeholder="Price (₹)" value={formData.price}
+                                        onChange={e => setFormData({ ...formData, price: e.target.value })}
+                                        className="input-field text-emerald-400" required />
+                                    <input type="number" placeholder="Units in Stock" value={formData.inventory}
+                                        onChange={e => setFormData({ ...formData, inventory: e.target.value })}
+                                        className="input-field" required />
+                                </div>
+                                <input type="text" placeholder="Origin Region (e.g. Varanasi, India)" value={formData.originRegion}
+                                    onChange={e => setFormData({ ...formData, originRegion: e.target.value })}
+                                    className="input-field" required />
+                                <input type="text" placeholder="Materials (comma separated)" value={formData.materialsUsed}
+                                    onChange={e => setFormData({ ...formData, materialsUsed: e.target.value })}
+                                    className="input-field" />
+
+                                <button type="submit"
+                                    className={`w-full py-4 mt-2 font-black text-xs uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg flex items-center justify-center gap-2
+                                        ${editingId
+                                            ? 'bg-gradient-to-r from-neonIndigo to-indigo-600 text-white shadow-neon-indigo hover:shadow-[0_0_30px_rgba(99,102,241,0.6)]'
+                                            : 'btn-solid-cyber'}`}>
+                                    {editingId ? <><Edit3 size={13} /> Update Asset</> : <><PlusCircle size={13} /> Deploy to Network</>}
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* Trust meter */}
+                        <div className="mt-4 glass-panel p-4">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Node Trust Score</span>
+                                <span className="text-xs font-black text-emerald-400">98.4%</span>
+                            </div>
+                            <div className="w-full bg-black/60 h-1.5 rounded-full overflow-hidden">
+                                <motion.div initial={{ width: 0 }} animate={{ width: '98.4%' }} transition={{ duration: 2, delay: 0.5 }}
+                                    className="h-full bg-gradient-to-r from-emerald-500 to-cyberCyan shadow-[0_0_8px_rgba(0,240,255,0.6)] rounded-full" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* ── PRODUCTS GRID ── */}
+                    <div>
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-sm font-black text-white uppercase tracking-widest">Active Nodes ({products.length})</h2>
+                        </div>
+
+                        {loadError && (
+                            <div className="mb-4 p-4 bg-alertRed/10 border border-alertRed/30 rounded-xl text-alertRed text-xs font-mono">{loadError}</div>
+                        )}
+
+                        {isLoading ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                                {[1,2,3,4,5,6].map(i => (
+                                    <div key={i} className="glass-panel overflow-hidden animate-pulse">
+                                        <div className="w-full h-48 bg-white/[0.04]" />
+                                        <div className="p-4 space-y-2">
+                                            <div className="h-4 bg-white/[0.06] rounded w-3/4" />
+                                            <div className="h-3 bg-white/[0.04] rounded w-1/3" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : products.length === 0 ? (
+                            <div className="glass-panel p-16 text-center">
+                                <Package size={40} className="text-gray-700 mx-auto mb-4" />
+                                <p className="text-gray-600 font-mono text-xs uppercase tracking-widest">No assets deployed yet.</p>
+                                <p className="text-gray-700 text-xs mt-1">Use the form to deploy your first product.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                                {products.map((product, i) => (
+                                    <motion.div
+                                        key={product._id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        whileHover={{ y: -6 }}
+                                        className={`glass-panel card-hover-glow group relative flex flex-col overflow-hidden ${editingId === product._id ? 'border-neonIndigo/50' : ''}`}
+                                    >
+                                        {/* Top accent */}
+                                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neonIndigo/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                        {/* Image */}
+                                        <div className="relative w-full h-52 overflow-hidden bg-black/60">
+                                            {product.image ? (
+                                                <img src={product.image} alt={product.title}
+                                                    className="w-full h-full object-contain p-3 opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-4xl">🧵</div>
+                                            )}
+                                            {/* Price badge */}
+                                            <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md border border-emerald-500/30 rounded-lg px-2.5 py-1">
+                                                <span className="text-emerald-400 font-black text-sm font-mono">₹{product.price}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Info */}
+                                        <div className="p-4 flex-1 flex flex-col">
+                                            <h3 className="font-bold text-white text-sm leading-snug mb-2 group-hover:text-neonIndigo transition-colors line-clamp-2">{product.title}</h3>
+                                            <div className="flex gap-2 flex-wrap mb-3">
+                                                {(product.materialsUsed || []).slice(0, 2).map(m => (
+                                                    <span key={m} className="tag-indigo">{m}</span>
+                                                ))}
+                                            </div>
+                                            <div className="mt-auto pt-3 border-t border-white/[0.06] flex justify-between items-center">
+                                                <span className="text-[10px] font-mono text-gray-500">{product.inventory} units</span>
+                                                <div className="flex gap-2">
+                                                    <button onClick={() => handleEdit(product)}
+                                                        className="flex items-center gap-1 text-[10px] font-mono text-neonIndigo border border-neonIndigo/30 bg-neonIndigo/5 px-2.5 py-1.5 rounded hover:bg-neonIndigo hover:text-white transition-all">
+                                                        <Edit3 size={10} /> Edit
+                                                    </button>
+                                                    <button onClick={() => handleBurn(product._id)} data-danger
+                                                        className="flex items-center gap-1 text-[10px] font-mono text-alertRed border border-alertRed/30 bg-alertRed/5 px-2.5 py-1.5 rounded hover:bg-alertRed hover:text-white transition-all">
+                                                        <Trash2 size={10} /> Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <button className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium">
-                    <Plus className="w-5 h-5" /> Add Product
-                </button>
             </div>
-
-            {/* 👉 STATS SECTION: Yahan humne reuseable 'HoverCard' component ka use kiya hai taaki artisan ko uski performance (Total Products, Active Orders, Revenue) ek jhalak mein dikh jaye */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <HoverCard title="Total Products" description="Items listed">
-                    <Package className="w-6 h-6 text-indigo-400" />
-                </HoverCard>
-
-                <HoverCard title="Active Orders" description="Global orders">
-                    <ShoppingCart className="w-6 h-6 text-emerald-400" />
-                </HoverCard>
-
-                <HoverCard title="Monthly Revenue" description="₹42,500">
-                    <TrendingUp className="w-6 h-6 text-amber-400" />
-                </HoverCard>
-            </div>
-
-            {/* 👉 INVENTORY TABLE: Yeh table structure hai jahan saare products ki details columns mein dikhai dengi */}
-            <div className="bg-slate-900/40 border border-white/10 rounded-2xl overflow-hidden">
-                <div className="p-6 border-b border-white/10">
-                    <h3 className="text-lg font-medium text-white">Inventory</h3>
-                </div>
-
-                <table className="w-full text-left">
-                    {/* Table Headers */}
-                    <thead className="bg-slate-800/50 text-slate-300 text-sm">
-                    <tr>
-                        <th className="p-4">Product</th>
-                        <th className="p-4">Category</th>
-                        <th className="p-4">Stock</th>
-                        <th className="p-4">Price</th>
-                        <th className="p-4 text-right">Actions</th>
-                    </tr>
-                    </thead>
-
-                    <tbody className="text-sm text-slate-400">
-                    {/* 👉 MAP FUNCTION: Yeh loop 'inventory' array ke har ek item ko read karke uske liye dynamically ek table row (<tr>) generate kar raha hai */}
-                    {inventory.map(item => (
-                        <tr key={item.id} className="border-b border-white/5">
-                            <td className="p-4 text-slate-200">{item.name}</td>
-                            <td className="p-4">{item.category}</td>
-                            <td className="p-4">{item.stock}</td>
-                            <td className="p-4">{item.price}</td>
-
-                            {/* 👉 ACTIONS: Yahan Edit aur Delete (Trash) ke clickable icons hain jisse artisan apne specific product ko modify ya remove kar sake */}
-                            <td className="p-4 flex justify-end gap-2">
-                                <Edit className="w-4 h-4 text-indigo-400" />
-                                <Trash2 className="w-4 h-4 text-red-400" />
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     );
-}
+};
+
+export default ArtisanView;
