@@ -223,51 +223,88 @@ export default function AdminView() {
 
     // ── Render ─────────────────────────────────────────────────────
     return (
-        <div className="min-h-[calc(100vh-80px)] bg-background text-gray-200 p-4 md:p-8 relative overflow-hidden selection:bg-alertRed/30">
-            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-alertRed/5 rounded-full blur-[180px] pointer-events-none" />
+        <div className="min-h-screen text-gray-200 p-4 md:p-8 relative overflow-hidden" style={{ background: '#000010', userSelect: 'none' }}>
+            <div className="fixed top-0 right-0 w-[700px] h-[700px] rounded-full blur-[200px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,0,60,0.08) 0%, transparent 70%)' }} />
+            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[180px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)' }} />
+            <div className="fixed top-1/2 left-1/3 w-[400px] h-[400px] rounded-full blur-[160px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,0,60,0.04) 0%, transparent 70%)' }} />
 
             <div className="max-w-7xl mx-auto relative z-10">
-                {/* Header */}
-                <header className="mb-8 border-b border-surfaceBorder pb-6 flex flex-wrap justify-between items-end gap-4">
-                    <div>
-                        <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-alertRed to-orange-500 tracking-tighter">NETWORK OVERSEER</h1>
-                        <p className="text-alertRed font-mono text-xs tracking-widest mt-2 uppercase flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-alertRed animate-pulse" /> Level 5 Authorization — Admin Access
-                        </p>
-                    </div>
-                    {/* Summary KPIs */}
-                    <div className="flex flex-wrap gap-3">
-                        {[
-                            { label: 'Network Value', value: `₹${totalValue.toLocaleString('en-IN')}`, color: 'text-emerald-400' },
-                            { label: 'Total Revenue', value: `₹${totalRevenue.toLocaleString('en-IN')}`, color: 'text-cyberCyan' },
-                            { label: 'Pending Orders', value: pendingCount, color: 'text-amber-400' },
-                            { label: 'Low Stock', value: lowStock, color: 'text-alertRed' },
-                        ].map(k => (
-                            <div key={k.label} className="glass-panel px-4 py-2 text-center min-w-[90px]">
-                                <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">{k.label}</p>
-                                <p className={`font-black text-lg ${k.color}`}>{k.value}</p>
+                {/* ── HEADER ── */}
+                <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+                    <div className="flex flex-wrap justify-between items-start gap-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0"
+                                style={{ background: 'linear-gradient(135deg, #ff003c, #ff6b35)', boxShadow: '0 0 30px rgba(255,0,60,0.5)' }}>
+                                <span className="text-xl">⚡</span>
                             </div>
-                        ))}
-                    </div>
-                </header>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                                    <span className="text-[10px] font-mono text-red-400 uppercase tracking-[0.3em]">Level 5 Authorization — Admin Access</span>
+                                </div>
+                                <h1 className="text-3xl font-black tracking-[-0.03em]"
+                                    style={{ background: 'linear-gradient(90deg, #ff003c, #ff6b35, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                                    Network Overseer
+                                </h1>
+                            </div>
+                        </div>
 
-                {/* Tab bar */}
+                        {/* KPI bento strip */}
+                        <div className="flex flex-wrap gap-3">
+                            {[
+                                { label: 'Network Value',  value: `₹${totalValue.toLocaleString('en-IN')}`,   color: '#4ade80', glow: 'rgba(74,222,128,0.3)'  },
+                                { label: 'Total Revenue',  value: `₹${totalRevenue.toLocaleString('en-IN')}`, color: '#00f5ff', glow: 'rgba(0,245,255,0.3)'   },
+                                { label: 'Pending Orders', value: pendingCount, color: '#fbbf24', glow: 'rgba(251,191,36,0.3)'  },
+                                { label: 'Low Stock',      value: lowStock,     color: '#ff003c', glow: 'rgba(255,0,60,0.3)'    },
+                            ].map((k, i) => (
+                                <motion.div key={k.label}
+                                    initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.08 }}
+                                    className="relative overflow-hidden px-5 py-3 text-center min-w-[100px] rounded-2xl"
+                                    style={{ background: 'rgba(8,8,28,0.8)', border: `1px solid ${k.color}22`, boxShadow: `0 0 20px ${k.glow}15` }}>
+                                    <div className="absolute top-0 left-0 right-0 h-[1px]"
+                                        style={{ background: `linear-gradient(90deg, transparent, ${k.color}70, transparent)` }} />
+                                    <p className="text-[9px] font-mono text-gray-600 uppercase tracking-widest">{k.label}</p>
+                                    <p className="font-black text-lg mt-0.5" style={{ color: k.color, textShadow: `0 0 15px ${k.glow}` }}>{k.value}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="mt-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,0,60,0.35), rgba(99,102,241,0.25), transparent)' }} />
+                </motion.header>
+
+                {/* ── TAB BAR ── */}
                 <div className="flex gap-2 mb-8">
                     {TABS.map(tab => {
                         const Icon = tab.icon;
+                        const isActive = activeTab === tab.id;
                         return (
-                            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-widest rounded transition-all ${activeTab === tab.id ? 'bg-alertRed/20 text-alertRed border border-alertRed/50' : 'text-gray-500 hover:text-white border border-transparent'}`}>
-                                <Icon size={14} /> {tab.label}
-                            </button>
+                            <motion.button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                                className="flex items-center gap-2 px-5 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-xl transition-all duration-300 relative overflow-hidden"
+                                style={isActive ? {
+                                    background: 'rgba(255,0,60,0.12)',
+                                    border: '1px solid rgba(255,0,60,0.4)',
+                                    color: '#ff6b6b',
+                                    boxShadow: '0 0 20px rgba(255,0,60,0.15)',
+                                } : {
+                                    background: 'rgba(255,255,255,0.02)',
+                                    border: '1px solid rgba(255,255,255,0.06)',
+                                    color: '#6b7280',
+                                }}>
+                                <Icon size={13} /> {tab.label}
+                            </motion.button>
                         );
                     })}
                 </div>
 
                 {/* Loading */}
                 {loading && (
-                    <div className="flex items-center justify-center py-24">
-                        <div className="w-10 h-10 border-4 border-alertRed border-t-transparent rounded-full animate-spin" />
+                    <div className="flex flex-col items-center justify-center py-24 gap-4">
+                        <div className="relative w-14 h-14">
+                            <div className="absolute inset-0 rounded-full border-4 border-transparent animate-spin" style={{ borderTopColor: '#ff003c', borderRightColor: '#ff6b35' }} />
+                            <div className="absolute inset-2 rounded-full border-2 border-transparent animate-spin" style={{ animationDirection: 'reverse', borderTopColor: '#fbbf24', animationDuration: '0.8s' }} />
+                        </div>
+                        <p className="font-mono text-xs text-red-400 uppercase tracking-[0.3em] animate-pulse">Loading network data...</p>
                     </div>
                 )}
 
