@@ -89,10 +89,10 @@ const ArtisanView = () => {
     const totalValue = products.reduce((s, p) => s + p.price * p.inventory, 0);
 
     return (
-        <div className="min-h-[calc(100vh-80px)] bg-background text-gray-200 relative overflow-hidden">
+        <div className="min-h-screen text-gray-200 relative overflow-hidden" style={{ background: '#000010' }}>
             {/* BG Orbs */}
-            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-neonIndigo/10 rounded-full blur-[200px] pointer-events-none animate-float" />
-            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-cyberCyan/8 rounded-full blur-[200px] pointer-events-none animate-float-delayed" />
+            <div className="fixed top-0 right-0 w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none animate-float" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)' }} />
+            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] rounded-full blur-[180px] pointer-events-none animate-float-delayed" style={{ background: 'radial-gradient(circle, rgba(0,245,255,0.07) 0%, transparent 70%)' }} />
 
             <div className="max-w-7xl mx-auto px-4 py-8 relative z-10">
                 {/* Header */}
@@ -130,7 +130,7 @@ const ArtisanView = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8">
                     {/* ── FORM PANEL ── */}
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                        <div className={`glass-panel p-6 relative overflow-hidden ${editingId ? 'border-neonIndigo/40 shadow-neon-indigo' : ''}`}>
+                        <div className={`glass-card p-6 relative overflow-hidden ${editingId ? 'border-neonIndigo/40' : ''}`}>
                             {editingId && <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-neonIndigo to-transparent" />}
 
                             <div className="flex items-center justify-between mb-5">
@@ -210,14 +210,14 @@ const ArtisanView = () => {
                         </div>
 
                         {/* Trust meter */}
-                        <div className="mt-4 glass-panel p-4">
+                        <div className="mt-4 glass-card p-4">
                             <div className="flex justify-between items-center mb-2">
                                 <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Node Trust Score</span>
                                 <span className="text-xs font-black text-emerald-400">98.4%</span>
                             </div>
                             <div className="w-full bg-black/60 h-1.5 rounded-full overflow-hidden">
                                 <motion.div initial={{ width: 0 }} animate={{ width: '98.4%' }} transition={{ duration: 2, delay: 0.5 }}
-                                    className="h-full bg-gradient-to-r from-emerald-500 to-cyberCyan shadow-[0_0_8px_rgba(0,240,255,0.6)] rounded-full" />
+                                    className="h-full rounded-full" style={{ background: 'linear-gradient(90deg, #10b981, #00f5ff)', boxShadow: '0 0 10px rgba(0,245,255,0.5)' }} />
                             </div>
                         </div>
                     </motion.div>
@@ -235,20 +235,20 @@ const ArtisanView = () => {
                         {isLoading ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                                 {[1,2,3,4,5,6].map(i => (
-                                    <div key={i} className="glass-panel overflow-hidden animate-pulse">
-                                        <div className="w-full h-48 bg-white/[0.04]" />
+                                    <div key={i} className="glass-card overflow-hidden">
+                                        <div className="skeleton w-full h-48" />
                                         <div className="p-4 space-y-2">
-                                            <div className="h-4 bg-white/[0.06] rounded w-3/4" />
-                                            <div className="h-3 bg-white/[0.04] rounded w-1/3" />
+                                            <div className="skeleton h-4 w-3/4" />
+                                            <div className="skeleton h-3 w-1/3 mt-2" />
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         ) : products.length === 0 ? (
-                            <div className="glass-panel p-16 text-center">
-                                <Package size={40} className="text-gray-700 mx-auto mb-4" />
+                            <div className="glass-card p-16 text-center">
+                                <Package size={40} className="mx-auto mb-4" style={{ color: 'rgba(255,255,255,0.12)' }} />
                                 <p className="text-gray-600 font-mono text-xs uppercase tracking-widest">No assets deployed yet.</p>
-                                <p className="text-gray-700 text-xs mt-1">Use the form to deploy your first product.</p>
+                                <p className="text-gray-700 text-xs mt-2">Use the form to deploy your first product to the network.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -258,9 +258,9 @@ const ArtisanView = () => {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: i * 0.05 }}
-                                        whileHover={{ y: -6 }}
-                                        className={`glass-panel card-hover-glow group relative flex flex-col overflow-hidden ${editingId === product._id ? 'border-neonIndigo/50' : ''}`}
+                                        className={`glow-card group relative flex flex-col ${editingId === product._id ? 'border-[#6366f1]/50' : ''}`}
                                     >
+                                        <div className="card-shine" />
                                         {/* Top accent */}
                                         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neonIndigo/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 

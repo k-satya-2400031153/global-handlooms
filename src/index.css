@@ -599,7 +599,136 @@ body::after {
   100% { background-position: 0%   50%; }
 }
 
-/* Corner accent glow */
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM UI ADDITIONS — v2 upgrade
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── FROSTED GLASS CARD ──────────────────────────────────────── */
+.glass-card {
+  background: rgba(8, 8, 24, 0.7);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 24px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,245,255,0.25), rgba(168,85,247,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.glass-card:hover { border-color: rgba(0,245,255,0.18); box-shadow: 0 0 0 1px rgba(0,245,255,0.08), 0 20px 60px rgba(0,0,0,0.6), 0 0 50px rgba(0,245,255,0.04), inset 0 1px 0 rgba(255,255,255,0.08); transform: translateY(-5px); }
+.glass-card:hover::before { opacity: 1; }
+
+/* ── GLOW CHROMATIC CARD ─────────────────────────────────────── */
+.glow-card {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(6,6,20,0.85);
+  backdrop-filter: blur(24px);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,245,255,0.6), rgba(168,85,247,0.5), rgba(236,72,153,0.4), rgba(0,245,255,0.6));
+  background-size: 300% 300%;
+  animation: prismShift 4s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.glow-card:hover::after { opacity: 1; }
+.glow-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(0,245,255,0.04); }
+
+/* ── SHIMMER SKELETON ────────────────────────────────────────── */
+.skeleton { position: relative; overflow: hidden; background: rgba(255,255,255,0.04); border-radius: 12px; }
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,245,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+}
+@keyframes skeletonShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── STAT GRADIENT NUMBER ────────────────────────────────────── */
+.stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00f5ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.04em;
+}
+
+/* ── GLOWING AVATAR ──────────────────────────────────────────── */
+.avatar-glow {
+  box-shadow: 0 0 0 3px rgba(0,245,255,0.15), 0 0 30px rgba(0,245,255,0.25), 0 0 60px rgba(168,85,247,0.12);
+  transition: box-shadow 0.35s ease;
+}
+.avatar-glow:hover { box-shadow: 0 0 0 4px rgba(0,245,255,0.4), 0 0 50px rgba(0,245,255,0.35), 0 0 90px rgba(168,85,247,0.2); }
+
+/* ── TAB PILL ACTIVE ─────────────────────────────────────────── */
+.tab-pill { padding: 8px 20px; border-radius: 12px; font-size: 11px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; transition: all 0.25s ease; cursor: pointer !important; border: 1px solid transparent; background: transparent; color: rgba(255,255,255,0.35); }
+.tab-pill:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.04); }
+.tab-pill.active { background: rgba(0,245,255,0.08); border-color: rgba(0,245,255,0.3); color: #00f5ff; box-shadow: 0 0 20px rgba(0,245,255,0.12), inset 0 0 10px rgba(0,245,255,0.05); }
+
+/* ── PRODUCT IMAGE ZOOM ───────────────────────────────────────── */
+.product-img-wrap { overflow: hidden; position: relative; }
+.product-img-wrap img { transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), filter 0.5s ease; filter: saturate(0.9); }
+.product-img-wrap:hover img { transform: scale(1.08); filter: saturate(1.15) brightness(1.05); }
+
+/* ── CARD SHINE SWEEP ─────────────────────────────────────────── */
+.card-shine { position: absolute; top: 0; bottom: 0; width: 60px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent); transform: skewX(-15deg); pointer-events: none; left: -80%; transition: none; }
+.glow-card:hover .card-shine { animation: cardShine 0.7s ease forwards; }
+@keyframes cardShine {
+  0%   { left: -80%; }
+  100% { left: 130%; }
+}
+
+/* ── ANIMATE FLOAT DELAYED ───────────────────────────────────── */
+.animate-float-delayed { animation: float 7s 1.5s ease-in-out infinite; }
+
+/* ── NEON LINE ────────────────────────────────────────────────── */
+.neon-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,245,255,0.4), rgba(168,85,247,0.3), transparent); border: none; }
+
+/* ── LIVE DOT VARIANTS ───────────────────────────────────────── */
+.dot-violet { background: #a855f7; width: 8px; height: 8px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 0 rgba(168,85,247,0.5); animation: violetPing 2s ease-out infinite; }
+.dot-rose   { background: #f0abfc; width: 8px; height: 8px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 0 rgba(240,171,252,0.5); animation: rosePing 2s ease-out infinite; }
+@keyframes violetPing {
+  0%  { box-shadow: 0 0 0 0 rgba(168,85,247,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(168,85,247,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(168,85,247,0); }
+}
+@keyframes rosePing {
+  0%  { box-shadow: 0 0 0 0 rgba(240,171,252,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(240,171,252,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(240,171,252,0); }
+}
+
+/* ── CORNER ACCENT GLOW ─────────────────────────────────────── */
 @keyframes cornerGlow {
   0%,100% { opacity: 0.3; transform: scale(1); }
   50%      { opacity: 0.7; transform: scale(1.05); }
