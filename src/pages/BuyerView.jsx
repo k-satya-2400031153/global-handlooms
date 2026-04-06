@@ -493,7 +493,7 @@ const BuyerView = () => {
                                                                     </button>
                                                                 )}
                                                             </div>
-                                                            <TrackingStepper currentStatus={displayStatus} city={order.shippingAddress?.city || 'Your City'} />
+                                                            <TrackingStepper currentStatus={displayStatus} city={order.shippingAddress?.city || 'Your City'} trackingHistory={order.trackingHistory || []} />
                                                         </div>
                                                     )}
                                                 </div>
