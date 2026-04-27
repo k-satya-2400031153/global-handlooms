@@ -1,5 +1,10 @@
 # Frontend ↔ Backend Connection Code
 
+> **⚠️ Note for Evaluator:**
+> This repository also contains a `spring-backend/` folder — that is an **unused experiment** from an earlier phase of the project.
+> The **actual running backend** is the **Node.js / Express** application located in the `backend/` folder (and in the `global_handlooms_Backend` repository).
+> The frontend React app communicates **only** with this Node.js backend on port `5000`.
+
 ---
 
 ## 1. Frontend — API Base URL (`src/pages/BuyerView.jsx`)
