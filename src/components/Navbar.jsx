@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
@@ -21,6 +21,7 @@ const ROLE_LABEL = {
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const location = useLocation(); // Forces Navbar to re-render on all navigations (including back swipe)
     const token = localStorage.getItem('token');
 
     let user = null;

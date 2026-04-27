@@ -19,11 +19,11 @@ function detectContext(target) {
 }
 
 const CTX = {
-    default: { size: 32, color: '#00f0ff', shadow: '0 0 20px rgba(0,240,255,0.5)', mix: 'screen',     label: null,  dotSize: 5,  dotColor: '#00f0ff' },
-    button:  { size: 64, color: '#00f0ff', shadow: '0 0 30px rgba(0,240,255,0.7)', mix: 'screen',     label: '↗',   dotSize: 4,  dotColor: '#00f0ff' },
-    link:    { size: 48, color: '#a78bfa', shadow: '0 0 25px rgba(167,139,250,0.7)', mix: 'screen',   label: '→',   dotSize: 4,  dotColor: '#a78bfa' },
-    danger:  { size: 56, color: '#ff003c', shadow: '0 0 30px rgba(255,0,60,0.8)',  mix: 'screen',     label: '✕',   dotSize: 4,  dotColor: '#ff003c' },
-    input:   { size: 24, color: 'rgba(255,255,255,0.4)', shadow: 'none', mix: 'normal',               label: null,  dotSize: 16, dotColor: 'rgba(255,255,255,0.9)' },
+    default: { size: 32, color: '#00f0ff', shadow: '0 0 20px rgba(0,240,255,0.8)', mix: 'normal',  label: null,  dotSize: 6,  dotColor: '#ffffff' },
+    button:  { size: 64, color: '#00f0ff', shadow: '0 0 30px rgba(0,240,255,0.9)', mix: 'normal',  label: '↗',   dotSize: 5,  dotColor: '#00f0ff' },
+    link:    { size: 48, color: '#c4b5fd', shadow: '0 0 25px rgba(196,181,253,0.9)', mix: 'normal', label: '→',   dotSize: 5,  dotColor: '#c4b5fd' },
+    danger:  { size: 56, color: '#ff003c', shadow: '0 0 30px rgba(255,0,60,0.9)',  mix: 'normal',  label: '✕',   dotSize: 5,  dotColor: '#ff4d6d' },
+    input:   { size: 24, color: 'rgba(255,255,255,0.6)', shadow: 'none', mix: 'normal',             label: null,  dotSize: 16, dotColor: 'rgba(255,255,255,0.95)' },
 };
 
 export default function CursorFX() {
@@ -178,7 +178,9 @@ export default function CursorFX() {
                 style={{
                     x: r2x, y: r2y,
                     translateX: '-50%', translateY: '-50%',
-                    background: `radial-gradient(circle, ${s.color}18 0%, transparent 70%)`,
+                    /* slightly stronger aura so it's visible on dark bg */
+                    background: `radial-gradient(circle, ${s.color}28 0%, transparent 70%)`,
+                    mixBlendMode: 'normal',
                 }}
                 animate={{ width: isClick ? s.size * 2.5 : s.size * 2.2, height: isClick ? s.size * 2.5 : s.size * 2.2 }}
                 transition={{ type: 'spring', stiffness: 100, damping: 20 }}
@@ -236,14 +238,15 @@ export default function CursorFX() {
                     x: dx, y: dy,
                     translateX: '-50%', translateY: '-50%',
                     backgroundColor: s.dotColor,
-                    boxShadow: `0 0 12px ${s.dotColor}, 0 0 24px ${s.dotColor}60`,
-                    mixBlendMode: 'screen',
+                    boxShadow: `0 0 10px 2px ${s.dotColor}, 0 0 24px ${s.dotColor}90`,
+                    /* normal blend so dot is ALWAYS visible on dark backgrounds */
+                    mixBlendMode: 'normal',
                 }}
                 animate={{
                     width:  isInput ? 2  : isClick ? s.dotSize * 1.8 : s.dotSize,
                     height: isInput ? 18 : isClick ? s.dotSize * 1.8 : s.dotSize,
                     borderRadius: isInput ? '2px' : '50%',
-                    opacity: isInput ? 0.8 : 1,
+                    opacity: isInput ? 0.9 : 1,
                 }}
                 transition={{ type: 'spring', stiffness: 1500, damping: 50, mass: 0.04 }}
             />

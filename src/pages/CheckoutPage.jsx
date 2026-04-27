@@ -112,6 +112,12 @@ export default function CheckoutPage() {
                 localStorage.removeItem('checkoutCart');
                 setIsProcessing(false);
                 setStep(4);
+
+                // ── Buyer purchase notification ──
+                toast.success(
+                    `🛒 Order confirmed! \nTracking: ${data.data.trackingNumber}\nTotal: ₹${data.data.totalAmount?.toLocaleString('en-IN')}`,
+                    { duration: 6000 }
+                );
             } else {
                 toast.error(data.message || 'Order failed. Please try again.');
                 setIsProcessing(false);
@@ -314,10 +320,16 @@ export default function CheckoutPage() {
                                             <p className="text-sm font-mono text-gray-300">Estimated delivery: <span className="text-cyberCyan font-bold">5–7 business days</span></p>
                                         </div>
 
-                                        <button onClick={() => navigate('/buyer')}
-                                            className="w-full py-4 bg-neonIndigo hover:bg-indigo-500 text-white font-black uppercase tracking-[0.2em] text-sm rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)]">
-                                            Back to Market
-                                        </button>
+                                        <div className="flex flex-col sm:flex-row gap-3">
+                                            <button onClick={() => navigate(`/invoice/${confirmedOrder._id}`)}
+                                                className="flex-1 py-4 bg-cyberCyan text-black font-black uppercase tracking-[0.2em] text-sm rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.35)] hover:bg-[#5affff] transition-all">
+                                                🧾 View Invoice
+                                            </button>
+                                            <button onClick={() => navigate('/buyer')}
+                                                className="flex-1 py-4 bg-neonIndigo hover:bg-indigo-500 text-white font-black uppercase tracking-[0.2em] text-sm rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)]">
+                                                Back to Market
+                                            </button>
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}

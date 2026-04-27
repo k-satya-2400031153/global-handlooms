@@ -13,6 +13,7 @@ import AdminView from './pages/AdminView';
 import MarketingView from './pages/MarketingView';
 import CheckoutPage from './pages/CheckoutPage';
 import ProfilePage from './pages/ProfilePage';
+import InvoicePage from './pages/InvoicePage';
 
 function App() {
     return (
@@ -127,6 +128,7 @@ function AppContent() {
                     <Route path="/admin" element={<ProtectedRoute requiredRole="Admin"><AdminView /></ProtectedRoute>} />
                     <Route path="/marketing" element={<ProtectedRoute requiredRole="Marketing Specialist"><MarketingView /></ProtectedRoute>} />
                     <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/invoice/:orderId" element={<ProtectedRoute requiredRole="Buyer"><InvoicePage /></ProtectedRoute>} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </main>

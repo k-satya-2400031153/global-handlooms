@@ -58,9 +58,7 @@ body {
 }
 
 /* ── CURSOR ──────────────────────────────────────────────── */
-*, body, a, button, select, input, textarea, label {
-  cursor: none !important;
-}
+/* Native cursor kept visible; CursorFX renders glow overlay on top */
 
 /* ── SCROLLBAR ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }

@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import TrackingStepper from '../components/TrackingStepper';
 import { ShoppingCart, Package, ClipboardList, Search, SlidersHorizontal, X, Zap, Star } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL;
 
+const VALID_TABS = ['market', 'cart', 'orders'];
+
 const BuyerView = () => {
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [cart, setCart] = useState([]);
-    const [activeTab, setActiveTab] = useState('market');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const rawTab = searchParams.get('tab');
+    const activeTab = VALID_TABS.includes(rawTab) ? rawTab : 'market';
+    const setActiveTab = (tab) => setSearchParams({ tab }, { replace: false });
     const [activeFilter, setActiveFilter] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('default');
@@ -124,9 +129,9 @@ const BuyerView = () => {
     };
 
     const tabs = [
-        { id: 'market', label: 'Market', icon: ShoppingCart, badge: 0 },
-        { id: 'cart',   label: 'Cart',   icon: Package, badge: cart.length },
-        { id: 'ledger', label: 'Orders', icon: ClipboardList, badge: 0 },
+        { id: 'market',  label: 'Market', icon: ShoppingCart,  badge: 0 },
+        { id: 'cart',    label: 'Cart',   icon: Package,        badge: cart.length },
+        { id: 'orders',  label: 'Orders', icon: ClipboardList,  badge: 0 },
     ];
 
     return (
@@ -389,7 +394,7 @@ const BuyerView = () => {
                 )}
 
                 {/* ══ LEDGER (ORDERS) TAB ══ */}
-                {activeTab === 'ledger' && (
+                {activeTab === 'orders' && (
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="max-w-4xl mx-auto">
 
                         {/* Live sync bar */}
