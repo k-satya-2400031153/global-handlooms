@@ -13,6 +13,7 @@ com\globalhandlooms\service\MarketingService.class
 com\globalhandlooms\dto\marketing\UpdateDiscountStatusRequest.class
 com\globalhandlooms\exception\GlobalExceptionHandler.class
 com\globalhandlooms\service\LogisticsEngineService.class
+com\globalhandlooms\config\SwaggerConfig.class
 com\globalhandlooms\dto\user\UpdateProfileRequest.class
 com\globalhandlooms\service\ProductService.class
 com\globalhandlooms\dto\product\UpdateProductRequest.class
